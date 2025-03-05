@@ -1,0 +1,64 @@
+import praw
+import re
+import os
+import random
+import time
+
+from openpyxl.styles.builtins import title
+
+reddit = praw.Reddit('autobot')
+print(reddit.user.me())
+
+if not os.path.isfile("posts_replied_to.txt"):
+    posts_replied_to = []
+
+else:
+    with open("posts_replied_to.txt", "r") as f:
+        posts_replied_to = f.read()
+        posts_replied_to = posts_replied_to.split("\n")
+        posts_replied_to = list(filter(None, posts_replied_to))
+
+subreddit = reddit.subreddit('Daredevil')
+new_posts = []
+quotes = ["Daredevil content? Instantly my day is better!"
+          "This is exactly what I needed to see today. Let's gooo!"
+          "Peak storytelling, peak action, peak character development—Daredevil stays unmatched."
+          "Hell’s Kitchen never sleeps, and neither does my hype for this show!"
+          "The GOAT is back! Daredevil fans, we stay winning."
+          "Charlie Cox in the suit again? Yeah, that’s what I’m talking about!"
+          "Every time I think I’m over Daredevil, something pulls me right back in. This show just hits different."
+          "This man took down the entire underworld with sheer willpower and some Catholic guilt. Absolutely legendary."
+          "Daredevil action scenes? Pure cinema. The hallway fights alone deserve their own award."
+          "Matt Murdock is out here proving why he's one of the greatest characters in comic book history. No debate."
+          "Daredevil fans are eating GOOD today!"
+          "Between the cinematography, the storytelling, and the raw emotion—this show always delivers."
+          "If it's got Daredevil in it, you already know it’s top-tier content."
+          "Wilson Fisk better start shaking, because The Devil of Hell’s Kitchen doesn’t play around!"
+          "This show isn't just great—it’s a masterclass in superhero storytelling."
+          "I can hear the church bells and the ‘NINJA WHIPPING’ sound effect already."
+          "The way this show balances action, drama, and character depth is just chef’s kiss."
+          "Daredevil’s theme song alone gives me chills. Absolute perfection."
+          "A world without a Daredevil show is a world I don’t want to live in."
+          "Hell’s Kitchen is about to be LIT. Bring on the Daredevil greatness!"
+          ]
+
+for submission in subreddit.hot(limit=10):
+    print(f"Checking post: {submission.title}")
+    '''
+    keywords = ["Daredevil", "Dare devil", "devil"]
+    if any(keyword.lower() in submission.title.lower() for keyword in keywords):
+        print("Keyword matched!")
+    else:
+        print("No match for keywords.")
+    '''
+    if submission.id not in posts_replied_to:
+            if re.search("Daredevil|Dare devil|devil", submission.title, re.IGNORECASE):
+                print("Found a match!")
+                submission.reply(random.choice(quotes))
+                print("Bot replied to: ", submission.title)
+                new_posts.append(submission.id)
+                time.sleep(10)
+
+with open("posts_replied_to.txt", "a") as f:
+    for post_id in new_posts:
+        f.write(post_id + "\n")
