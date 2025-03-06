@@ -1,7 +1,7 @@
 # Reddit Automation Bot
 
 ## Video Demo
-[Watch the video demo here](https://your-video-url-here)
+[Watch the video demo here](https://youtu.be/loF4hfJdDrk)
 
 ## Project Description
 This project is a Reddit automation bot built using Python and the `praw` library. The bot allows users to interact with Reddit by automating specific tasks related to posts and comments. The key functionalities of the bot include:
