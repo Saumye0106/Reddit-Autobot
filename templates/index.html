@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reddit Bot Control Panel</title>
+</head>
+<body>
+    <h2>Reddit Automation Bot</h2>
+
+    <form method="post">
+
+        <label>Subreddit:</label><br>
+        <input type="text" name="subreddit" required><br><br>
+
+        <label>Keyword (for reply):</label><br>
+        <input type="text" name="keyword"><br><br>
+
+        <label>Reply Text:</label><br>
+        <textarea name="reply_text"></textarea><br><br>
+
+        <button type="submit" name="action" value="reply">Run Reply Bot</button>
+        <button type="submit" name="action" value="delete">Delete Replies</button>
+
+    </form>
+
+    {% if result %}
+        <p><b>Result:</b> {{ result }}</p>
+    {% endif %}
+
+</body>
+</html>
